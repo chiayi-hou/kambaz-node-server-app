@@ -9,6 +9,7 @@ const schema = new mongoose.Schema(
     due: Date,
     available: Date, 
     point: Number,
-  }
+  },
+  { collection: "assignments" }
 );
 export default schema;
