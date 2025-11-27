@@ -3,8 +3,8 @@ import model from "./model.js";
 
 export default function EnrollmentsDao() {
 
-  function enrollUserInCourse(userId, courseId) {
-    return model.create({
+  async function enrollUserInCourse(userId, courseId) {
+    const result = await model.create({
      user: userId,
      course: courseId,
      _id: `${userId}-${courseId}`,
@@ -14,7 +14,7 @@ export default function EnrollmentsDao() {
     // const newEnrollment = { _id: uuidv4(), user: userId, course: courseId }
     // enrollments.push(newEnrollment);
     // return newEnrollment;
-
+   return result;
   }
  /*
   function unEnrollUser(userId, courseId){
