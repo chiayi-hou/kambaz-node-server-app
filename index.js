@@ -1,5 +1,8 @@
+// run server: nodemon index.js
 // index meaning default or the beginning
 import express from "express";
+import mongoose from "mongoose";
+
 import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
@@ -14,6 +17,7 @@ import CourseRoutes from "./Kambaz/Courses/routes.js";
 import ModulesRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentsRoutes from "./Kambaz/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
+import QuizzesRoutes from "./Kambaz/Quizzes/routes.js";
 
 const app = express(); // create server
 
@@ -43,6 +47,9 @@ if (process.env.SERVER_ENV !== "development") {
 // use this to set sessions
 app.use(session(sessionOptions));
 
+// mongoDB
+const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
+mongoose.connect(CONNECTION_STRING);
 
 // 要用express.json才能讓他讀懂json (才能用GET/POST...)
 // occurs AFTER CORS and sessions but BEFORE all the routes
@@ -50,11 +57,11 @@ app.use(express.json());
 
 Hello(app);
 Lab5(app);
-UserRoutes(app, db);
-CourseRoutes(app, db);
-ModulesRoutes(app, db);
-AssignmentsRoutes(app, db);
-EnrollmentsRoutes(app, db);
-
+UserRoutes(app);
+CourseRoutes(app);
+ModulesRoutes(app);
+AssignmentsRoutes(app);
+EnrollmentsRoutes(app);
+// QuizzesRoutes(app, db);
 
 app.listen(process.env.PORT || 4000);
