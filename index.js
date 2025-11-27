@@ -49,7 +49,12 @@ app.use(session(sessionOptions));
 
 // mongoDB
 const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
-mongoose.connect(CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING).then(() => {
+    console.log('Mongo connected');
+    console.log('DB name:', mongoose.connection.name);
+    console.log('Host:', mongoose.connection.host);
+  })
+  .catch((err) => console.error(err));;
 
 // 要用express.json才能讓他讀懂json (才能用GET/POST...)
 // occurs AFTER CORS and sessions but BEFORE all the routes
