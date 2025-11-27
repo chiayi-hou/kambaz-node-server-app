@@ -56,6 +56,15 @@ mongoose.connect(CONNECTION_STRING).then(() => {
   })
   .catch((err) => console.error(err));;
 
+mongoose.connection.once("open", async () => {
+  const db = mongoose.connection.db;
+  const collections = await db.listCollections().toArray();
+  console.log("Collections in Kambaz:", collections.map(c => c.name));
+
+  const users = await db.collection("users").find({}).toArray();
+  console.log("Users in Kambaz.users:", users);
+});
+
 // 要用express.json才能讓他讀懂json (才能用GET/POST...)
 // occurs AFTER CORS and sessions but BEFORE all the routes
 app.use(express.json()); 
