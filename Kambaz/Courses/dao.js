@@ -31,8 +31,9 @@ export default function CoursesDao() {
     return model.deleteOne({ _id: courseId });
   }
 
-  function updateCourse(courseId, courseUpdates) {
-    model.updateOne({_id: courseId}, {$set: courseUpdates});
+  async function updateCourse(courseId, courseUpdates) {
+    const result = await model.updateOne({_id: courseId}, {$set: courseUpdates});
+    return result;
     //const { courses } = db;
     //const course = courses.find((course) => course._id === courseId);
     //Object.assign(course, courseUpdates);
