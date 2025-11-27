@@ -27,8 +27,9 @@ export default function AssignmentsDao() {
    return model.deleteOne({ _id: aid });
  }
 
- function updateAssignment(aid, assignmentUpdates) {
-    model.updateOne({_id: aid}, {$set: assignmentUpdates});
+ async function updateAssignment(aid, assignmentUpdates) {
+    const result = await model.updateOne({_id: aid}, {$set: assignmentUpdates});
+    return result;
     //const { assignments } = db;
     //const assignment = assignments.find((assignment) => assignment._id === aid);
     //Object.assign(assignment, assignmentUpdates);
