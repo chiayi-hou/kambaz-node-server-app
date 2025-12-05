@@ -5,4 +5,5 @@ import users from "./users.js";
 import grades from "./grades.js";
 import enrollments from "./enrollments.js";
 import quizzes from "./quizzes.js";
-export default { courses, modules, assignments, users, grades, enrollments, quizzes };
+import quizAttempts from "./quizAttempts.js";
+export default { courses, modules, assignments, users, grades, enrollments, quizzes, quizAttempts };

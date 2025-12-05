@@ -1,4 +1,4 @@
-db.quizAttempts = [
+export default [
   {
     _id: "A1001",
     quizId: "Q101",

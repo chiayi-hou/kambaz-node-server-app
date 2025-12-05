@@ -1,27 +1,21 @@
 // QuizAttempts/dao.js
 import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
-export default function QuizAttemptsDao(db) {
-  function createAttempt(attempt) {
+export default function QuizAttemptsDao() {
+  async function createAttempt(attempt) {
     const newAttempt = { ...attempt, _id: uuidv4() };
-    db.quizAttempts = [...db.quizAttempts, newAttempt];
-    return newAttempt;
+    return await model.create(newAttempt);
   }
 
-  function findAttemptsForQuizAndUser(quizId, userId) {
-    const { quizAttempts } = db;
-    return quizAttempts.filter(
-      (a) => a.quizId === quizId && a.userId === userId
-    );
+  async function findAttemptsForQuizAndUser(quizId, userId) {
+    const attempts = await model.find({ quizId, userId }).sort({ attemptNumber: 1 });
+    return attempts;
   }
 
-  function findLatestAttemptForQuizAndUser(quizId, userId) {
-    const attempts = findAttemptsForQuizAndUser(quizId, userId);
-    if (!attempts.length) return null;
-    // 假設 attemptNumber 一直增加
-    return attempts.reduce((latest, cur) =>
-      cur.attemptNumber > latest.attemptNumber ? cur : latest
-    );
+  async function findLatestAttemptForQuizAndUser(quizId, userId) {
+    const latest = await model.findOne({ quizId, userId }).sort({ attemptNumber: -1 });
+    return latest;
   }
 
   return {
